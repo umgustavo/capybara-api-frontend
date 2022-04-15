@@ -26,7 +26,7 @@ export default function NavBar(props) {
                 justifyContent='space-between'
             >
                 <Box d='flex' alignItems='center'>
-                    <GiCapybara size={36} marginRight='16px' />
+                    <GiCapybara size={36} />
                     <Heading
                         pl={2}
                         d={['none', 'inline-block', 'inline-block']}
