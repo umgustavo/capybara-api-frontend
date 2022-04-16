@@ -31,7 +31,7 @@ export default function NavBar(props) {
                         pl={2}
                         d={['none', 'inline-block', 'inline-block']}
                     >
-                        CapybaraAPI
+                        Capybara API
                     </Heading>
                 </Box>
                 <HStack spacing='16px'>

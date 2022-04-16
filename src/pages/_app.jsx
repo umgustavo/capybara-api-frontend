@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
                 <meta charset='UTF-8' />
                 <meta
                     name='description'
-                    content='CapybaraAPI — Capybara images & facts API.'
+                    content='Capybara API — Capybara images & facts API.'
                 />
                 <meta
                     name='keywords'
@@ -23,11 +23,11 @@ function MyApp({ Component, pageProps }) {
 
                 <meta
                     property='og:title'
-                    content='CapybaraAPI — Capybara images & facts API.'
+                    content='Capybara API — Capybara images & facts API.'
                 />
                 <meta
                     property='og:description'
-                    content='CapybaraAPI</b> is a public API that provides cool images & facts about capybaras.'
+                    content='Capybara API</b> is a public API that provides cool images & facts about capybaras.'
                 />
                 <meta
                     property='og:image'

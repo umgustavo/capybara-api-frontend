@@ -55,7 +55,7 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>CapybaraAPI — Capybara images {'&'} facts API.</title>
+                <title>Capybara API — Capybara images {'&'} facts API.</title>
             </Head>
             <Box>
                 <NavBar mb={[5, 5, 10]} />
@@ -101,8 +101,9 @@ export default function Home() {
                         <Box>
                             <Heading>About</Heading>
                             <Text fontSize='xl'>
-                                <b>CapybaraAPI</b> is a public API that provides
-                                cool images {'&'} facts about capybaras.
+                                <b>Capybara API</b> is a public API that
+                                provides cool images {'&'} facts about
+                                capybaras.
                             </Text>
                         </Box>
                         <Box>
