@@ -1,56 +1,41 @@
-import { useState, useEffect } from 'react';
-import {
-    Box,
-    Button,
-    Container,
-    Heading,
-    Image,
-    Link,
-    Text,
-    VStack,
-} from '@chakra-ui/react';
-import Head from 'next/head';
-import NavBar from '../components/NavBar';
-import axios from 'axios';
+import { useState, useEffect } from 'react'
+import { Box, Button, Container, Heading, Image, Link, Text, VStack } from '@chakra-ui/react'
+import Head from 'next/head'
+import NavBar from '../components/NavBar'
+import axios from 'axios'
 
 export default function Home() {
-    const [imageURL, setImageURL] = useState(
-        'https://api.capybara-api.xyz/v1/image/v8HVS23?size=large'
-    );
-    const [fact, setFact] = useState('');
-    const [isGenerating, setIsGenerating] = useState(true);
-    const [initialized, setInitialized] = useState(false);
+    const [data, setData] = useState({})
+    const [started, setStarted] = useState(false)
+    const [isGenerating, setIsGenerating] = useState(true)
 
     async function handleGenerate() {
-        console.log('gerando');
-        setIsGenerating(true);
+        setIsGenerating(true)
 
-        const imageReq = await axios.get(
-            'https://api.capybara-api.xyz/v1/image/random'
-        );
-        const factReq = await axios.get(
-            'https://api.capybara-api.xyz/v1/facts/random?lang=en_us'
-        );
-
-        const imageURL = imageReq.data.image_urls.large;
-        const fact = factReq.data.fact;
-
-        if (imageURL && fact) {
-            setImageURL(imageURL);
-            setFact(`“${fact}”`);
-        }
-
-        setIsGenerating(false);
+        let _data = {}
+        axios
+            .get('https://api.capybara-api.xyz/v1/image/random')
+            .then((res) => {
+                _data.imageURL = res.data.image_urls.medium
+                axios.get('https://api.capybara-api.xyz/v1/facts/random?lang=en_us').then((res) => {
+                    _data.fact = `“${res.data.fact}”`
+                    setData(_data)
+                    setIsGenerating(false)
+                    if (!started) setStarted(true)
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+                setIsGenerating(false)
+            })
     }
 
     useEffect(() => {
         window.addEventListener('load', () => {
-            handleGenerate();
-            setTimeout(() => {
-                setInitialized(true);
-            }, 1500);
-        });
-    }, []);
+            handleGenerate()
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>
@@ -60,17 +45,17 @@ export default function Home() {
             <Box>
                 <NavBar mb={[5, 5, 10]} />
                 <Container maxW='container.lg'>
-                    <VStack spacing={10} align='stretch'>
+                    <VStack spacing={10} align='stretch' mb={10}>
                         <Box
                             d={['block', 'block', 'flex']}
                             gap='32px'
                             justifyContent='space-between'
                             alignItems={['normal', 'normal', 'center']}
-                            transition='opacity 1s ease-out'
-                            opacity={initialized ? 1 : 0}
+                            transition='all 0.2s'
+                            opacity={started ? 1 : 0}
                         >
                             <Image
-                                src={imageURL}
+                                src={data.imageURL}
                                 alt='Capybara Image'
                                 borderRadius='xl'
                                 w={['100%', '100%', '50%']}
@@ -83,7 +68,7 @@ export default function Home() {
                                     fontSize={['xl', '2xl', '3xl']}
                                     transition='all 0.2s ease-out'
                                 >
-                                    {fact}
+                                    {data.fact}
                                 </Heading>
                                 <Button
                                     colorScheme='purple'
@@ -101,16 +86,14 @@ export default function Home() {
                         <Box>
                             <Heading>About</Heading>
                             <Text fontSize='xl'>
-                                <b>Capybara API</b> is a public API that
-                                provides cool images {'&'} facts about
-                                capybaras.
+                                <b>Capybara API</b> is a public API that provides cool images {'&'}{' '}
+                                facts about capybaras.
                             </Text>
                         </Box>
                         <Box>
                             <Heading>Contribute</Heading>
                             <Text fontSize='xl'>
-                                This project is open source and you can
-                                contribute on my{' '}
+                                This project is open source and you can contribute on my{' '}
                                 <Link
                                     color='pink.500'
                                     href='https://github.com/umgustavo/capybara-api'
@@ -124,8 +107,7 @@ export default function Home() {
                         <Box>
                             <Heading>Donate</Heading>
                             <Text fontSize='xl'>
-                                If you liked the project and want to support it
-                                financially, you can{' '}
+                                If you liked the project and want to support it financially, you can{' '}
                                 <Link
                                     color='pink.500'
                                     href='https://www.buymeacoffee.com/umgustavo'
@@ -140,5 +122,5 @@ export default function Home() {
                 </Container>
             </Box>
         </>
-    );
+    )
 }
